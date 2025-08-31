@@ -45,10 +45,17 @@ namespace PokemonDraftAPI.Controllers
         [HttpPost]
         public async Task<ActionResult<Counter>> PostCounter(Counter counter)
         {
+            var pokemonExists = await _context.Pokemons.AnyAsync(p => p.Id == counter.PokemonId);
+            var counterExists = await _context.Pokemons.AnyAsync(p => p.Id == counter.CounterPokemonId);
+
+            if (!pokemonExists || !counterExists)
+                return BadRequest("Pokémon or Counter Pokémon does not exist.");
+
             _context.Counters.Add(counter);
             await _context.SaveChangesAsync();
             return CreatedAtAction(nameof(GetCounters), new { id = counter.Id }, counter);
         }
+
 
         // PUT: api/counters/{id}
         [HttpPut("{id}")]
