@@ -47,7 +47,6 @@ namespace PokemonDraftAPI.Controllers
             return CreatedAtAction(nameof(GetPokemon), new { id = pokemon.Id }, pokemon);
         }
 
-        // PUT: api/pokemons/5
         [HttpPut("{id}")]
         public async Task<IActionResult> PutPokemon(int id, Pokemon pokemon)
         {
@@ -74,8 +73,9 @@ namespace PokemonDraftAPI.Controllers
                 }
             }
 
-            return NoContent();
+            return Ok(pokemon); // 👈 devuelve el objeto actualizado
         }
+
 
         // DELETE: api/pokemons/5
         [HttpDelete("{id}")]
