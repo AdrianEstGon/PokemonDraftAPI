@@ -33,7 +33,7 @@ namespace PokemonDraftAPI.Controllers
         public async Task<IActionResult> Register(RegisterDto dto)
         {
             if (await _context.Users.AnyAsync(u => u.Username == dto.Username))
-                return BadRequest("El usuario ya existe");
+                return BadRequest("User already exists");
 
             var user = new User
             {
@@ -45,7 +45,7 @@ namespace PokemonDraftAPI.Controllers
             _context.Users.Add(user);
             await _context.SaveChangesAsync();
 
-            return Ok("Usuario registrado");
+            return Ok("User registered");
         }
 
         // 🔹 Login de usuario
