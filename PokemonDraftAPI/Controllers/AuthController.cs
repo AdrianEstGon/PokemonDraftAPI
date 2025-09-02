@@ -55,7 +55,7 @@ namespace PokemonDraftAPI.Controllers
             var user = await _context.Users.FirstOrDefaultAsync(u => u.Username == dto.Username);
 
             if (user == null || user.PasswordHash != HashPassword(dto.Password))
-                return Unauthorized("Credenciales incorrectas");
+                return Unauthorized("Wrong credentials");
 
             // 🔹 Generar token
             var jwtSettings = _configuration.GetSection("Jwt");
