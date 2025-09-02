@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 using PokemonDraftAPI.Database;
@@ -8,6 +9,7 @@ namespace PokemonDraftAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class CountersController : ControllerBase
     {
         private readonly AppDbContext _context;
@@ -40,7 +42,7 @@ namespace PokemonDraftAPI.Controllers
 
 
 
-
+        [Authorize(Roles = "admin")]
         // POST: api/counters
         [HttpPost]
         public async Task<ActionResult<Counter>> PostCounter(Counter counter)
@@ -56,7 +58,7 @@ namespace PokemonDraftAPI.Controllers
             return CreatedAtAction(nameof(GetCounters), new { id = counter.Id }, counter);
         }
 
-
+        [Authorize(Roles = "admin")]
         // PUT: api/counters/{id}
         [HttpPut("{id}")]
         public async Task<IActionResult> PutCounter(int id, Counter counterDto)
@@ -73,7 +75,7 @@ namespace PokemonDraftAPI.Controllers
             return NoContent();
         }
 
-
+        [Authorize(Roles = "admin")]
         // DELETE: api/counters/{id}
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteCounter(int id)

@@ -1,5 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 
+using PokemonDraftAPI.Database.Entities;
+
 namespace PokemonDraftAPI.Database
 {
     public class AppDbContext : DbContext
@@ -8,6 +10,7 @@ namespace PokemonDraftAPI.Database
 
         public DbSet<Pokemon> Pokemons { get; set; }
         public DbSet<Counter> Counters { get; set; }
+        public DbSet<User> Users { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -28,6 +31,10 @@ namespace PokemonDraftAPI.Database
             // Opcional: índice único para no repetir el mismo counter
             modelBuilder.Entity<Counter>()
                 .HasIndex(c => new { c.PokemonId, c.CounterPokemonId })
+                .IsUnique();
+
+            modelBuilder.Entity<User>()
+                .HasIndex(u => u.Username)
                 .IsUnique();
         }
     }

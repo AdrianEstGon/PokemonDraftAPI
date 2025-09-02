@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 using PokemonDraftAPI.Database;
@@ -7,6 +8,7 @@ namespace PokemonDraftAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class PokemonsController : ControllerBase
     {
         private readonly AppDbContext _context;
@@ -37,6 +39,7 @@ namespace PokemonDraftAPI.Controllers
             return pokemon;
         }
 
+        [Authorize(Roles = "admin")]
         // POST: api/pokemons
         [HttpPost]
         public async Task<ActionResult<Pokemon>> PostPokemon(Pokemon pokemon)
@@ -47,6 +50,7 @@ namespace PokemonDraftAPI.Controllers
             return CreatedAtAction(nameof(GetPokemon), new { id = pokemon.Id }, pokemon);
         }
 
+        [Authorize(Roles = "admin")]
         [HttpPut("{id}")]
         public async Task<IActionResult> PutPokemon(int id, Pokemon pokemon)
         {
@@ -76,7 +80,7 @@ namespace PokemonDraftAPI.Controllers
             return Ok(pokemon); // 👈 devuelve el objeto actualizado
         }
 
-
+        [Authorize(Roles = "admin")]
         // DELETE: api/pokemons/5
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeletePokemon(int id)
