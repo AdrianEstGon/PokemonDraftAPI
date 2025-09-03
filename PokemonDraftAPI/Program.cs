@@ -37,17 +37,14 @@ builder.Services.AddDbContext<AppDbContext>(options =>
 // 🔹 Configurar CORS
 builder.Services.AddCors(options =>
 {
-    options.AddPolicy("AllowFrontend", policy =>
+    options.AddPolicy("AllowFrontend", builder =>
     {
-        policy.WithOrigins(
-            "http://localhost:5173",        // frontend local
-            "https://unitedraft.netlify.app"         // si luego lo despliegas
-        )
-        .AllowAnyHeader()
-        .AllowAnyMethod();
+        builder
+            .AllowAnyOrigin() // la URL de tu frontend
+            .AllowAnyHeader()
+            .AllowAnyMethod();
     });
 });
-
 
 // Add services to the container.
 builder.Services.AddControllers();
