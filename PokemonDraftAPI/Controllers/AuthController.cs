@@ -78,7 +78,7 @@ namespace PokemonDraftAPI.Controllers
 
             var tokenString = new JwtSecurityTokenHandler().WriteToken(token);
 
-            return Ok(new { token = tokenString, role = user.Role });
+            return Ok(new { token = tokenString, role = user.Role, userId = user.Id });
         }
 
         // 🔹 Hasheo simple de contraseñas (SHA256)
