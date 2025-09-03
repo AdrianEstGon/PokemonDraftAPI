@@ -14,5 +14,7 @@ namespace PokemonDraftAPI.Database.Entities
 
         [Required]
         public string Role { get; set; } = "user"; // valores: "admin", "user"
+
+        public ICollection<UserPokemon> UserPokemons { get; set; } = new List<UserPokemon>();
     }
 }

@@ -1,4 +1,6 @@
-﻿namespace PokemonDraftAPI.Database
+﻿using PokemonDraftAPI.Database.Entities;
+
+namespace PokemonDraftAPI.Database
 {
     public class Pokemon
     {
@@ -10,5 +12,7 @@
         public string Role { get; set; } = null!; 
 
         public ICollection<Counter>? Counters { get; set; }
+
+        public ICollection<UserPokemon> UserPokemons { get; set; } = new List<UserPokemon>();
     }
 }

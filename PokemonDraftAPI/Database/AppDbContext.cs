@@ -11,6 +11,8 @@ namespace PokemonDraftAPI.Database
         public DbSet<Pokemon> Pokemons { get; set; }
         public DbSet<Counter> Counters { get; set; }
         public DbSet<User> Users { get; set; }
+        public DbSet<UserPokemon> UserPokemons { get; set; }
+
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -36,6 +38,20 @@ namespace PokemonDraftAPI.Database
             modelBuilder.Entity<User>()
                 .HasIndex(u => u.Username)
                 .IsUnique();
+
+            // Clave compuesta para la tabla puente
+            modelBuilder.Entity<UserPokemon>()
+                .HasKey(up => new { up.UserId, up.PokemonId });
+
+            modelBuilder.Entity<UserPokemon>()
+                .HasOne(up => up.User)
+                .WithMany(u => u.UserPokemons)
+                .HasForeignKey(up => up.UserId);
+
+            modelBuilder.Entity<UserPokemon>()
+                .HasOne(up => up.Pokemon)
+                .WithMany(p => p.UserPokemons)
+                .HasForeignKey(up => up.PokemonId);
         }
     }
 
