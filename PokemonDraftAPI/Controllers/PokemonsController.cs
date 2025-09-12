@@ -54,11 +54,6 @@ namespace PokemonDraftAPI.Controllers
         [HttpPut("{id}")]
         public async Task<IActionResult> PutPokemon(int id, Pokemon pokemon)
         {
-            if (id != pokemon.Id)
-            {
-                return BadRequest();
-            }
-
             _context.Entry(pokemon).State = EntityState.Modified;
 
             try
