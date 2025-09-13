@@ -62,7 +62,7 @@ namespace PokemonDraftAPI.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!_context.Pokemons.Any(e => e.Id == id))
+                if (!_context.Pokemons.Any(e => e.Id == pokemon.Id))
                 {
                     return NotFound();
                 }
