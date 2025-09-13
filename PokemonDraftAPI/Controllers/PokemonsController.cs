@@ -54,26 +54,24 @@ namespace PokemonDraftAPI.Controllers
         [HttpPut("{id}")]
         public async Task<IActionResult> PutPokemon(int id, Pokemon pokemon)
         {
-            _context.Entry(pokemon).State = EntityState.Modified;
+            var existingPokemon = await _context.Pokemons.FindAsync(id);
 
-            try
+            if (existingPokemon == null)
             {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!_context.Pokemons.Any(e => e.Id == pokemon.Id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
+                return NotFound();
             }
 
-            return Ok(pokemon); // 👈 devuelve el objeto actualizado
+            // ✅ Copiar propiedades (puedes usar AutoMapper si quieres algo más automático)
+            existingPokemon.Name = pokemon.Name;
+            existingPokemon.ImageUrl = pokemon.ImageUrl;
+            existingPokemon.Role = pokemon.Role;
+            // agrega aquí el resto de propiedades que quieras actualizar
+
+            await _context.SaveChangesAsync();
+
+            return Ok(existingPokemon); // 👈 ahora devuelve el objeto actualizado y trackeado
         }
+
 
         [Authorize(Roles = "admin")]
         // DELETE: api/pokemons/5
