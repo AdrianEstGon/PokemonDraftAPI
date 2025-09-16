@@ -65,6 +65,7 @@ namespace PokemonDraftAPI.Controllers
             existingPokemon.Name = pokemon.Name;
             existingPokemon.ImageUrl = pokemon.ImageUrl;
             existingPokemon.Role = pokemon.Role;
+            existingPokemon.Tier = pokemon.Tier;
             // agrega aquí el resto de propiedades que quieras actualizar
 
             await _context.SaveChangesAsync();

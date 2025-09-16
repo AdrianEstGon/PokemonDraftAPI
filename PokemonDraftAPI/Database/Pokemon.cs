@@ -9,7 +9,9 @@ namespace PokemonDraftAPI.Database
 
         public string ImageUrl { get; set; } = null!;
 
-        public string Role { get; set; } = null!; 
+        public string Role { get; set; } = null!;
+
+        public string? Tier { get; set; }
 
         public ICollection<Counter>? Counters { get; set; }
 
